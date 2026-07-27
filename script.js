@@ -1,5 +1,5 @@
 // Replace with your Supabase project URL and anon/public key
-const SUPABASE_URL = 'https://hdkirktmehxqnyfmcyzv.supabase.co/rest/v1/';
+const SUPABASE_URL = 'https://hdkirktmehxqnyfmcyzv.supabase.co';
 const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imhka2lya3RtZWh4cW55Zm1jeXp2Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODUwMzYxMzQsImV4cCI6MjEwMDYxMjEzNH0.5Vsg2123pba71O-2H2_ONB1EtPbJ_HY4X7UjbwSUGPQ';
 
 // Initialize Supabase client
