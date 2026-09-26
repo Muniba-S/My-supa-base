@@ -1,22 +1,165 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>My First Website</title>
-  <link rel="stylesheet" href="style.css" />
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Sundrop — She Shines Initiative</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,400;0,600;1,500&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <div class="login-container">
-    <h2>My First Website</h2>
-    <form id="loginForm">
-      <input type="email" id="email" placeholder="Email" required />
-      <input type="password" id="password" placeholder="Password" required />
-      <button type="submit">Log In</button>
+
+<header>
+  <div class="nav">
+    <div class="logo">☀️ Sundrop</div>
+    <div class="nav-actions">
+      <button class="affiliate-btn" id="affiliateOpenBtn">Become an Affiliate</button>
+      <button class="cart-btn" id="cartOpenBtn">🧺<span class="badge" id="cartBadge">0</span></button>
+    </div>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="hero-inner">
+    <h1>Every stitch, carried forward by her.</h1>
+    <div class="tagline">She Shines Initiative</div>
+    <p class="desc">Sundrop is a platform for the women of Bari Imam, Pakistan to sell what they make by hand and be recognized for the skill behind it.</p>
+    <div class="btn-row">
+      <button class="btn btn-gold" onclick="scrollTo('#collection')">Shop the Collection</button>
+      <button class="btn btn-outline" onclick="scrollTo('#story')">Meet the Initiative</button>
+    </div>
+    <p class="fine">Every purchase pays an artisan directly — no middlemen, no funding gap.</p>
+  </div>
+</section>
+
+<section id="collection">
+  <div class="wrap">
+    <div class="eyebrow">The Collection</div>
+    <h2>Handmade by the women of Bari Imam</h2>
+    <p class="lede">Every piece here is designed and stitched by a local artisan. Drag any swatch to spin it around. Proceeds go directly to the woman who made it.</p>
+    <div class="grid" id="productGrid"></div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="impact">
+      <div><h3>Direct, fair pay</h3><p>Every sale pays the artisan who made it — no middlemen taking a cut of her work.</p></div>
+      <div><h3>Skill-building</h3><p>Workshops in tailoring, embroidery, and small-business basics for women who want to grow their craft.</p></div>
+      <div><h3>Visibility</h3><p>Each piece is credited to its maker by name, so buyers know exactly whose skill they're supporting.</p></div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="founder">
+      <div class="eyebrow">For Founders</div>
+      <h2>Add a new piece to the shop</h2>
+      <p class="founder-note">This saves to your own browser only, as a working demo. For a shop that updates live for every visitor, you'll need a real backend — happy to help set that up when you're ready.</p>
+      <form id="addForm">
+        <input type="text" id="f_name" placeholder="Product name" required>
+        <input type="text" id="f_artisan" placeholder="Artisan's name" required>
+        <input type="number" id="f_price" placeholder="Price (Rs)" required>
+        <textarea id="f_desc" placeholder="Short description"></textarea>
+        <label style="font-size:.85rem;opacity:.7;">Product photo<input type="file" id="f_photo" accept="image/*"></label>
+        <button type="submit" class="submit-btn">Add to Shop</button>
+      </form>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="eyebrow">Track Your Order</div>
+    <h2>Where's my package?</h2>
+    <div class="track-box">
+      <div class="track-row">
+        <input type="text" id="trackInput" placeholder="Enter order ID (e.g. SD-1234)">
+        <button onclick="trackOrder()">Track</button>
+      </div>
+      <p id="trackMsg"></p>
+      <ul class="steps" id="trackSteps"></ul>
+    </div>
+  </div>
+</section>
+
+<section id="story" class="story">
+  <div class="wrap">
+    <div class="eyebrow">Our Story</div>
+    <h2>A platform, not just a shop</h2>
+    <p>Bari Imam is a community on the edge of Islamabad, known for its shrine and, quietly, for the needlework skill of its women — taught mother to daughter, rarely sold beyond the neighborhood.</p>
+    <p>Sundrop exists to change that. We give each woman a storefront, a fair price for her work, and credit under her own name — turning a skill she already has into an income she controls.</p>
+    <button class="btn btn-outline" onclick="scrollTo('#collection')">See the Collection</button>
+  </div>
+</section>
+
+<footer>Sundrop — She Shines Initiative. A demo storefront.</footer>
+
+<!-- Product modal -->
+<div class="overlay" id="productOverlay">
+  <div class="sheet">
+    <button class="sheet-close" onclick="closeOverlay('productOverlay')">✕</button>
+    <div class="spin-box" id="modalSpin" style="border-radius:14px;margin-bottom:16px;"><div class="spin-face" id="modalFace"></div></div>
+    <h2 id="modalName"></h2>
+    <div class="price" id="modalPrice"></div>
+    <p id="modalDesc"></p>
+    <div>Select a size</div>
+    <div class="size-row" id="sizeRow">
+      <button class="size-btn" data-s="S">S</button>
+      <button class="size-btn active" data-s="M">M</button>
+      <button class="size-btn" data-s="L">L</button>
+      <button class="size-btn" data-s="XL">XL</button>
+    </div>
+    <button class="submit-btn" style="width:100%" onclick="addToCart()">Add to Cart</button>
+  </div>
+</div>
+
+<!-- Cart drawer -->
+<div class="overlay" id="cartOverlay">
+  <div class="sheet">
+    <button class="sheet-close" onclick="closeOverlay('cartOverlay')">✕</button>
+    <h2>Your Cart</h2>
+    <div id="cartItems"></div>
+    <div class="cart-total"><span>Total</span><span id="cartTotal">Rs 0</span></div>
+    <button class="submit-btn" style="width:100%" onclick="openOverlay('checkoutOverlay')" id="checkoutBtn">Checkout</button>
+  </div>
+</div>
+
+<!-- Checkout modal -->
+<div class="overlay" id="checkoutOverlay">
+  <div class="sheet">
+    <button class="sheet-close" onclick="closeOverlay('checkoutOverlay')">✕</button>
+    <h2>Almost there ✨</h2>
+    <p style="font-size:.9rem;opacity:.75;">Demo checkout — no real payment is taken here yet.</p>
+    <form id="checkoutForm">
+      <input type="text" placeholder="Full name" required>
+      <input type="tel" placeholder="Phone number" required>
+      <textarea placeholder="Delivery address" required></textarea>
+      <button type="submit" class="submit-btn">Place Order (Cash on Delivery)</button>
     </form>
   </div>
+</div>
 
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-  <script src="script.js"></script>
+<!-- Affiliate modal -->
+<div class="overlay" id="affiliateOverlay">
+  <div class="sheet">
+    <button class="sheet-close" onclick="closeOverlay('affiliateOverlay')">✕</button>
+    <h2>Become an Affiliate</h2>
+    <p style="font-size:.9rem;opacity:.75;">Join Sundrop's affiliate program. We'll save your details to our affiliate list.</p>
+    <form id="affiliateForm">
+      <input type="email" id="aff_email" placeholder="Email address" required>
+      <input type="text" id="aff_postal" placeholder="Postal code" required>
+      <button type="submit" class="submit-btn">Join the Affiliate Program</button>
+    </form>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<!-- Supabase client library -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="script.js"></script>
 </body>
 </html>
