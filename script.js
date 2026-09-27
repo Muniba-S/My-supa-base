@@ -175,8 +175,8 @@ document.getElementById('affiliateOpenBtn').addEventListener('click',()=>openOve
 
 document.getElementById('affiliateForm').addEventListener('submit', async e=>{
   e.preventDefault();
-  const email = document.getElementById('aff_email').value.trim();
-  const postalCode = document.getElementById('aff_postal').value.trim();
+  const email = document.getElementById('aff_Email').value.trim();
+  const postalCode = document.getElementById('aff_Postal code').value.trim();
   const submitBtn = e.target.querySelector('button[type=submit]');
   submitBtn.disabled = true; submitBtn.textContent = 'Joining...';
   try{
